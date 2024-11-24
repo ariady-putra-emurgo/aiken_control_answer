@@ -12,15 +12,13 @@ test choose_data() {
 
 fn constr_data_to_datum(constr: Data) -> Datum {
   let Pair(i, ds) = builtin.un_constr_data(constr)
-  when i is {
-    0 -> Constr0
-    1 -> {
-      expect [d] = ds
+  when (i, ds) is {
+    (0, []) -> Constr0
+    (1, [d]) -> {
       expect i: Int = d
       Constr1(i)
     }
-    2 -> {
-      expect [d1, d2] = ds
+    (2, [d1, d2]) -> {
       expect field_1: ByteArray = d1
       expect field_2: Bool = d2
       Constr2(field_1, field_2)
